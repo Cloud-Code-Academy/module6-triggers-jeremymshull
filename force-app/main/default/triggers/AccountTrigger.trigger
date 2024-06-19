@@ -1,7 +1,7 @@
 trigger AccountTrigger on Account (before insert) {
-  for (Account acc : Trigger.new) {
-    if (acc.Type == null) {
-      acc.Type = 'Prospect';
+  if (Trigger.isBefore) {
+    if (Trigger.isInsert) {
+      AccountTriggerHandler.beforeInsert(Trigger.new);
     }
   }
 }
