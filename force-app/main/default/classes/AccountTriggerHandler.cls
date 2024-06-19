@@ -30,9 +30,6 @@ public class AccountTriggerHandler {
                 acc.BillingState = acc.ShippingState;
                 acc.BillingPostalCode = acc.ShippingPostalCode;
                 acc.BillingCountry = acc.ShippingCountry;
-            } else {
-                // Add error if any of the shipping fields are empty
-                acc.addError('Shipping fields should not be empty');
             }
 
             /*
@@ -46,6 +43,33 @@ public class AccountTriggerHandler {
                 acc.Fax != null) {
                 acc.Rating = 'Hot';
             }
+        }       
+    }
+
+    public static void afterInsert(List<Account> newAccounts) {
+        /*
+        * Question 4
+        * Account Trigger
+        * When an account is inserted create a contact related to the account with the following default values:
+        * LastName = 'DefaultContact'
+        * Email = 'default@email.com'
+        * Trigger should only fire on insert.
+        */
+        
+        // Create List to store Contacts related to accounts
+        List<Contact> contsToInsert = new List<Contact>();
+        
+        for (Account acc : newAccounts) {
+            Contact newContact = new Contact(
+                LastName = 'DefaultContact',
+                Email = 'default@email.com',
+                AccountId = acc.Id
+            );
+            
+            contsToInsert.add(newContact);
         }
+
+        // Insert list of contacts
+        insert contsToInsert;
     }
 }
