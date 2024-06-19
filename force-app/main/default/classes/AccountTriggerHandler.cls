@@ -34,6 +34,18 @@ public class AccountTriggerHandler {
                 // Add error if any of the shipping fields are empty
                 acc.addError('Shipping fields should not be empty');
             }
+
+            /*
+            * Question 3
+            * Account Trigger
+            * When an account is inserted set the rating to 'Hot' if the Phone, Website, and Fax ALL have a value.
+            * Trigger should only fire on insert.
+            */
+            if (acc.Phone != null &&
+                acc.Website != null &&
+                acc.Fax != null) {
+                acc.Rating = 'Hot';
+            }
         }
     }
 }
