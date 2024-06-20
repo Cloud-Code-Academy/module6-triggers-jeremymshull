@@ -12,6 +12,34 @@ public class OpportunityTriggerHandler {
                 opp.addError('Opportunity amount must be greater than 5000');
             }
         }
+
+        /*
+        * Question 7
+        * Opportunity Trigger
+        * When an opportunity is updated set the primary contact on the opportunity to the contact on the same account with the title of 'CEO'.
+        * Trigger should only fire on update.
+        */
+        Set<Id> accountIds = new Set<Id>();
+        for (Opportunity opp : newOpps) {
+            if (opp.AccountId != null) {
+                accountIds.add(opp.AccountId);
+            }     
+        }
+
+        Map<Id, Contact> accToContactMap = new Map<Id, Contact>();
+        for (Contact con : [SELECT Id, AccountId FROM Contact WHERE Title = 'CEO' AND AccountID IN :accountIds]) {
+            if (!accToContactMap.containsKey(con.AccountId)) {
+                accToContactMap.put(con.AccountId, con);
+            }
+        }
+
+        for (Opportunity opp : newOpps) {
+            Contact ceoContact = accToContactMap.get(opp.AccountId);
+            if (ceoContact != null) {
+                opp.Primary_Contact__c = ceoContact.Id;
+            }
+           
+        }
     }
 
     public static void beforeDelete (List<Opportunity> oldOpps) {
