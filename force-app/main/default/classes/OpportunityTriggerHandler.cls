@@ -1,5 +1,14 @@
 public class OpportunityTriggerHandler {
     public static void beforeUpdate (List<Opportunity> newOpps) {
+        validateOpportunityAmmount(newOpps);
+        setPrimaryContact(newOpps);
+    }    
+    
+    public static void beforeDelete (List<Opportunity> oldOpps) {
+        preventDeletionOfClosedWonOppsForBanking(oldOpps);
+    }
+        
+    private static void validateOpportunityAmmount (List<Opportunity> newOpps) {
         /*
         * Question 5
         * Opportunity Trigger
@@ -12,8 +21,10 @@ public class OpportunityTriggerHandler {
                 opp.addError('Opportunity amount must be greater than 5000');
             }
         }
-
-        /*
+    }    
+        
+    private static void setPrimaryContact (List<Opportunity> newOpps) {
+       /*
         * Question 7
         * Opportunity Trigger
         * When an opportunity is updated set the primary contact on the opportunity to the contact on the same account with the title of 'CEO'.
@@ -37,12 +48,13 @@ public class OpportunityTriggerHandler {
             Contact ceoContact = accToContactMap.get(opp.AccountId);
             if (ceoContact != null) {
                 opp.Primary_Contact__c = ceoContact.Id;
-            }
-           
-        }
-    }
+            }   
+        } 
+    }    
 
-    public static void beforeDelete (List<Opportunity> oldOpps) {
+    
+    
+    private static void preventDeletionOfClosedWonOppsForBanking (List<Opportunity> oldOpps) {
         /*
         * Question 6
         * Opportunity Trigger
@@ -62,5 +74,5 @@ public class OpportunityTriggerHandler {
                 opp.addError('Cannot delete closed opportunity for a banking account that is won');
             }
         }
-    }
+    }    
 }

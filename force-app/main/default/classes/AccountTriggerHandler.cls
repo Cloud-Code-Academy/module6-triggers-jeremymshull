@@ -1,5 +1,15 @@
 public class AccountTriggerHandler {
     public static void beforeInsert(List<Account> newAccounts) {
+        acctTypeProspect(newAccounts);
+        copyShippingAddressToBillingAddress(newAccounts);
+        setAcctRatingToHot(newAccounts);
+    }
+    
+    public static void afterInsert(List<Account> newAccounts) {
+        createDefaultContact(newAccounts);
+    }
+    
+    private static void acctTypeProspect (List<Account> newAccounts) {
         /*
         * Question 1
         * Account Trigger
@@ -9,8 +19,12 @@ public class AccountTriggerHandler {
         for (Account acc : newAccounts) {
             if (acc.Type == null) {
               acc.Type = 'Prospect';
-            }
-
+            }  
+        }
+    }
+    
+    private static void copyShippingAddressToBillingAddress (List<Account> newAccounts) {
+        for (Account acc : newAccounts) {
             /*
             * Question 2
             * Account Trigger
@@ -31,8 +45,12 @@ public class AccountTriggerHandler {
                 acc.BillingPostalCode = acc.ShippingPostalCode;
                 acc.BillingCountry = acc.ShippingCountry;
             }
+        }
+    }
 
-            /*
+    private static void setAcctRatingToHot (List<Account> newAccounts) {
+        for (Account acc : newAccounts) {
+           /*
             * Question 3
             * Account Trigger
             * When an account is inserted set the rating to 'Hot' if the Phone, Website, and Fax ALL have a value.
@@ -42,11 +60,13 @@ public class AccountTriggerHandler {
                 acc.Website != null &&
                 acc.Fax != null) {
                 acc.Rating = 'Hot';
-            }
-        }       
+            } 
+        }
     }
-
-    public static void afterInsert(List<Account> newAccounts) {
+            
+    
+    
+    private static void createDefaultContact (List<Account> newAccounts) {
         /*
         * Question 4
         * Account Trigger
@@ -71,5 +91,7 @@ public class AccountTriggerHandler {
 
         // Insert list of contacts
         insert contsToInsert;
-    }
+    }    
+        
+    
 }
