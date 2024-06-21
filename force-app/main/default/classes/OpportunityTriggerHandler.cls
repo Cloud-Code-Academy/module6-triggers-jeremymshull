@@ -1,4 +1,5 @@
 public class OpportunityTriggerHandler {
+    // Handler methods
     public static void beforeUpdate (List<Opportunity> newOpps) {
         validateOpportunityAmmount(newOpps);
         setPrimaryContact(newOpps);
@@ -7,7 +8,8 @@ public class OpportunityTriggerHandler {
     public static void beforeDelete (List<Opportunity> oldOpps) {
         preventDeletionOfClosedWonOppsForBanking(oldOpps);
     }
-        
+    
+    // Helper methods
     private static void validateOpportunityAmmount (List<Opportunity> newOpps) {
         /*
         * Question 5
@@ -52,8 +54,6 @@ public class OpportunityTriggerHandler {
         } 
     }    
 
-    
-    
     private static void preventDeletionOfClosedWonOppsForBanking (List<Opportunity> oldOpps) {
         /*
         * Question 6

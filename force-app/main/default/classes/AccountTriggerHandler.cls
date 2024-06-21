@@ -1,4 +1,5 @@
 public class AccountTriggerHandler {
+    // Handler methods
     public static void beforeInsert (List<Account> newAccounts) {
         acctTypeProspect(newAccounts);
         copyShippingAddressToBillingAddress(newAccounts);
@@ -9,6 +10,7 @@ public class AccountTriggerHandler {
         createDefaultContact(newAccounts);
     }
 
+    // Helper methods
     private static void acctTypeProspect (List<Account> newAccounts) {
         /*
         * Question 1
