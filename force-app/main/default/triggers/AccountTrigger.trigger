@@ -1,13 +1,10 @@
 trigger AccountTrigger on Account (before insert, after insert) {
-  if (Trigger.isBefore) {
-    if (Trigger.isInsert) {
+  switch on Trigger.OperationType {
+    when BEFORE_INSERT {
       AccountTriggerHandler.beforeInsert(Trigger.new);
     }
-  }
-
-  if (Trigger.isAfter) {
-    if (Trigger.isInsert) {
+    when AFTER_INSERT {
       AccountTriggerHandler.afterInsert(Trigger.new);
     }
-  }
+  }  
 }

@@ -1,10 +1,9 @@
 trigger OpportunityTrigger on Opportunity (before update, before delete) {
-  if (Trigger.isBefore) {
-    if (Trigger.isUpdate) {
+  switch on Trigger.OperationType {
+    when BEFORE_UPDATE {
       OpportunityTriggerHandler.beforeUpdate(Trigger.new);
     }
-
-    if (Trigger.isDelete) {
+    when BEFORE_DELETE {
       OpportunityTriggerHandler.beforeDelete(Trigger.old);
     }
   }

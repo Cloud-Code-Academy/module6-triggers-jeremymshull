@@ -1,14 +1,14 @@
 public class AccountTriggerHandler {
-    public static void beforeInsert(List<Account> newAccounts) {
+    public static void beforeInsert (List<Account> newAccounts) {
         acctTypeProspect(newAccounts);
         copyShippingAddressToBillingAddress(newAccounts);
         setAcctRatingToHot(newAccounts);
     }
     
-    public static void afterInsert(List<Account> newAccounts) {
+    public static void afterInsert (List<Account> newAccounts) {
         createDefaultContact(newAccounts);
     }
-    
+
     private static void acctTypeProspect (List<Account> newAccounts) {
         /*
         * Question 1
@@ -63,9 +63,7 @@ public class AccountTriggerHandler {
             } 
         }
     }
-            
-    
-    
+                
     private static void createDefaultContact (List<Account> newAccounts) {
         /*
         * Question 4
@@ -91,7 +89,5 @@ public class AccountTriggerHandler {
 
         // Insert list of contacts
         insert contsToInsert;
-    }    
-        
-    
+    }        
 }
